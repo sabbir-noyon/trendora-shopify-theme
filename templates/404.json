@@ -8,25 +8,17 @@
 * ------------------------------------------------------------
 */
 {
-  "name": "Header group",
-  "type": "header",
   "sections": {
-    "announcement": {
-      "type": "announcementbar",
+    "main": {
+      "type": "main-404",
       "settings": {
-        "message": "25% OFF for US based delivery!"
-      }
-    },
-    "header": {
-      "type": "header",
-      "settings": {
-        "menu": "main-menu",
-        "mega_menu": true
+        "image": "shopify:\/\/shop_images\/404-page-found-error.jpg",
+        "action_url": "",
+        "action_label": "Go Back"
       }
     }
   },
   "order": [
-    "announcement",
-    "header"
+    "main"
   ]
 }

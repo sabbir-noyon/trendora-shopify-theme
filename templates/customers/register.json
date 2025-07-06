@@ -8,25 +8,14 @@
 * ------------------------------------------------------------
 */
 {
-  "name": "Header group",
-  "type": "header",
   "sections": {
-    "announcement": {
-      "type": "announcementbar",
+    "main": {
+      "type": "main-register",
       "settings": {
-        "message": "25% OFF for US based delivery!"
-      }
-    },
-    "header": {
-      "type": "header",
-      "settings": {
-        "menu": "main-menu",
-        "mega_menu": true
       }
     }
   },
   "order": [
-    "announcement",
-    "header"
+    "main"
   ]
 }
