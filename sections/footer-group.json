@@ -8,13 +8,18 @@
  * ------------------------------------------------------------
  */
 {
+  "type": "footer",
+  "name": "t:general.footer",
   "sections": {
-    "main": {
-      "type": "hello-world",
-      "settings": {}
+    "footer": {
+      "type": "footer",
+      "settings": {
+        "menu": "",
+        "show_payment_icons": true
+      }
     }
   },
   "order": [
-    "main"
+    "footer"
   ]
 }

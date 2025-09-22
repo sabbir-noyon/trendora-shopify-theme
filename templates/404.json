@@ -7,10 +7,10 @@
  * made to this file may be overwritten.
  * ------------------------------------------------------------
  */
-{
+ {
   "sections": {
     "main": {
-      "type": "hello-world",
+      "type": "404",
       "settings": {}
     }
   },
