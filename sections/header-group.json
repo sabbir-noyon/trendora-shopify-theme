@@ -8,15 +8,30 @@
  * ------------------------------------------------------------
  */
 {
+  "name": "Header group",
   "type": "header",
-  "name": "t:general.header",
   "sections": {
+    "announcement": {
+      "type": "announcementbar",
+      "settings": {
+        "message": "25% OFF for US based delivery!"
+      }
+    },
+    "announcement_bar": {
+      "type": "announcement-bar",
+      "settings": {}
+    },
     "header": {
       "type": "header",
-      "settings": {}
+      "settings": {
+        "menu": "main-menu",
+        "mega_menu": true
+      }
     }
   },
   "order": [
+    "announcement",
+    "announcement_bar",
     "header"
-  ],
+  ]
 }

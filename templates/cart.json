@@ -9,12 +9,13 @@
  */
 {
   "sections": {
-    "main": {
-      "type": "cart",
-      "settings": {}
+    "main-cart": {
+      "type": "main-cart-template",
+      "settings": {
+      }
     }
   },
   "order": [
-    "main"
+    "main-cart"
   ]
 }

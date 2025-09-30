@@ -10,8 +10,9 @@
 {
   "sections": {
     "main": {
-      "type": "blog",
-      "settings": {}
+      "type": "main-blog",
+      "settings": {
+      }
     }
   },
   "order": [

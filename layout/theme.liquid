@@ -1,70 +1,105 @@
 <!doctype html>
-<html lang="{{ request.locale.iso_code }}">
+<html class="no-js" lang="{{ request.locale.iso_code }}">
   <head>
-    {% comment %} Inlined CSS Variables {% endcomment %}
-    {% render 'css-variables' %}
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="theme-color" content="">
+    <link rel="canonical" href="{{ canonical_url }}">
 
-    {% comment %} Social, title, etc. {% endcomment %}
-    {% render 'meta-tags' %}
+    {%- if settings.favicon != blank -%}
+      <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
+    {%- endif -%}
 
-    {% comment %} Load and preload the critical CSS {% endcomment %}
-    {{ 'critical.css' | asset_url | stylesheet_tag: preload: true }}
+    {%- unless settings.type_header_font.system? and settings.type_body_font.system? -%}
+      <link rel="preconnect" href="https://fonts.shopifycdn.com" crossorigin>
+    {%- endunless -%}
 
     {% comment %} Vendor CSS Files {% endcomment %}
-     {{  'animate.css' |  asset_url |  stylesheet_tag }}
-     {{  'bootstrap-select.min.css' |  asset_url |  stylesheet_tag }}
-     {{  'bootstrap.min.css' |  asset_url |  stylesheet_tag }}
-     {{  'drift-basic.min.css' |  asset_url |  stylesheet_tag }}
-     {{  'image-compare-viewer.min.css' |  asset_url |  stylesheet_tag }}
-     {{  'jquery.fancybox.min.css' |  asset_url |  stylesheet_tag }}
-     {{  'magnific-popup.min.css' |  asset_url |  stylesheet_tag }}
-     {{  'photoswipe.css' |  asset_url |  stylesheet_tag }}
-     {{  'swiper-bundle.min.css' |  asset_url |  stylesheet_tag }}
-     
-     {% comment %} Main CSS File {% endcomment %}
-     {{  'styles.css' |  asset_url |  stylesheet_tag }}
+    <link rel="stylesheet" href="{{ 'animate.css' | asset_url }}">
+    <link rel="stylesheet" href="{{ 'bootstrap-select.min.css' | asset_url }}">
+    <link rel="stylesheet" href="{{ 'bootstrap.min.css' | asset_url }}">
+    <link rel="stylesheet" href="{{ 'drift-basic.min.css' | asset_url }}">
+    <link rel="stylesheet" href="{{ 'image-compare-viewer.min.css' | asset_url }}">
+    <link rel="stylesheet" href="{{ 'jquery.fancybox.min.css' | asset_url }}">
+    <link rel="stylesheet" href="{{ 'magnific-popup.min.css' | asset_url }}">
+    <link rel="stylesheet" href="{{ 'photoswipe.css' | asset_url }}">
+    <link rel="stylesheet" href="{{ 'swiper-bundle.min.css' | asset_url }}">
 
-     {% comment %} Custom CSS File {% endcomment %}
-     {{  'custom.css' |   asset_url |  stylesheet_tag }}
-    
-     {{ content_for_header }}
+    {% comment %} Main CSS File {% endcomment %}
+    <link rel="stylesheet" href="{{ 'styles.css' | asset_url }}">
+    <link rel="stylesheet" href="{{ 'base.css' | asset_url }}">
+
+    <title>
+      {{ page_title }}
+      {%- if current_tags %} &ndash; tagged "{{ current_tags | join: ', ' }}"{% endif -%}
+      {%- if current_page != 1 %} &ndash; Page {{ current_page }}{% endif -%}
+      {%- unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}
+    </title>
+
+    {% if page_description %}
+      <meta name="description" content="{{ page_description | escape }}">
+    {% endif %}
+
+    {{ content_for_header }}
+
+    <script>
+      document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
+      if (Shopify.designMode) {
+        document.documentElement.classList.add('shopify-design-mode');
+      }
+    </script>
   </head>
 
-  <body>
+  <body class="gradient{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %}">
+    <a class="skip-to-content-link button visually-hidden" href="#MainContent">
+      {{ 'accessibility.skip_to_text' | t }}
+    </a>
+
+    {% comment %} Cart Drawer {% endcomment %}
+    {% if settings.cart_type == 'drawer' %}
+      {% section 'cart-drawer' %}
+    {% endif %}
+    
+    {% comment %} Header group sections {% endcomment %}
     {% sections 'header-group' %}
 
-    {{ content_for_layout }}
+    <main id="MainContent" class="content-for-layout focus-none" role="main" tabindex="-1">
+      {{ content_for_layout }}
+    </main>
 
+    {% comment %} Footer group sections {% endcomment %}
     {% sections 'footer-group' %}
 
-    {% comment %} JQuery File {% endcomment %}
-    {{ 'jquery.min.js' | asset_url |  script_tag }}
+    {% comment %} JQuery {% endcomment %}
+    <script src="{{ 'jquery.min.js' | asset_url }}" defer="defer"></script>
+
+    <script src="{{ 'predictive-search.js' | asset_url }}" defer="defer"></script>
 
     {% comment %} Vendor JS Files {% endcomment %}
-    {{ 'bootstrap-select.min.js' | asset_url |  script_tag }}
-    {{ 'bootstrap.min.js' | asset_url |  script_tag }}
-    {{ 'carousel.js' | asset_url |  script_tag }}
-    {{ 'count-down.js' | asset_url |  script_tag }}
-    {{ 'drift.min.js' | asset_url |  script_tag }}
-    {{ 'image-compare-viewer.min.js' | asset_url |  script_tag }}
-    {{ 'infinityslide.js' | asset_url |  script_tag }}
-    {{ 'lazysize.min.js' | asset_url |  script_tag }}
-    {{ 'magnific-popup.min.js' | asset_url |  script_tag }}
-    {{ 'model-viewer.min.js' | asset_url |  script_tag }}
-    {{ 'nouislider.min.js' | asset_url |  script_tag }}
-    {{ 'parallaxie.js' | asset_url |  script_tag }}
-    {{ 'photoswipe-lightbox.umd.min.js' | asset_url |  script_tag }}
-    {{ 'photoswipe.umd.min.js' | asset_url |  script_tag }}
-    {{ 'shop.js' | asset_url |  script_tag }}
-    {{ 'sibforms.js' | asset_url |  script_tag }}
-    {{ 'swiper-bundle.min.js' | asset_url |  script_tag }}
-    {{ 'wow.min.js' | asset_url |  script_tag }}
-    {{ 'zoom.js' | asset_url |  script_tag }}
+    <script src="{{ 'bootstrap-select.min.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'bootstrap.min.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'carousel.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'count-down.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'drift.min.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'image-compare-viewer.min.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'infinityslide.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'lazysize.min.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'magnific-popup.min.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'model-viewer.min.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'nouislider.min.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'parallaxie.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'photoswipe-lightbox.umd.min.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'photoswipe.umd.min.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'shop.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'sibforms.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'swiper-bundle.min.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'wow.min.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'zoom.js' | asset_url }}" defer="defer"></script>
 
     {% comment %} Main JS File {% endcomment %}
-    {{ 'main.js' | asset_url |  script_tag }}
-
-    {% comment %} Custom JS File {% endcomment %}
-    {{ 'custom.js' | asset_url |  script_tag }}
+    <script src="{{ 'main.js' | asset_url }}" defer="defer"></script>
+    
+    <script src="{{ 'global.js' | asset_url }}" defer="defer"></script>
   </body>
 </html>
